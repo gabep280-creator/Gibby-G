@@ -57,3 +57,4 @@ next-env.d.ts
 
 # raw video footage and renders (too big for git)
 /content/footage
+/content/share
