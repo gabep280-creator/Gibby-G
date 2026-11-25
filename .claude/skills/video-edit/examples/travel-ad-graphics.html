@@ -1,0 +1,196 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden;
+    font-family:"Inter","Noto Color Emoji",sans-serif;-webkit-font-smoothing:antialiased}
+  .abs{position:absolute;opacity:0;will-change:transform,opacity}
+  .card{left:120px;width:840px;top:1225px;box-sizing:border-box;padding:34px 40px;border-radius:38px;
+    background:rgba(255,255,255,.97);color:#111;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .row{display:flex;align-items:center;gap:16px;font-size:38px;font-weight:800}
+  .muted{color:#6b6b6b;font-weight:600}
+  .badge{margin-left:auto;font-size:30px;font-weight:900;padding:10px 20px;border-radius:999px;color:#fff;background:#1fb35b}
+  .stamp{position:absolute;font-weight:900;letter-spacing:4px;border:10px solid;border-radius:22px;padding:6px 26px;
+    font-size:76px;left:50%;top:50%;opacity:0;white-space:nowrap;background:rgba(255,255,255,.9)}
+  #bar{left:0;top:0;height:12px;width:1080px;transform-origin:0 0;opacity:1;
+    background:linear-gradient(90deg,#ffd400,#ff7a00)}
+  .pill{left:50%;top:120px;font-size:50px;font-weight:900;color:#111;background:#ffd400;padding:20px 40px;border-radius:999px;
+    box-shadow:0 14px 40px rgba(0,0,0,.4);white-space:nowrap}
+  .dots i{display:inline-block;width:14px;height:14px;border-radius:50%;background:#999;margin:0 4px}
+  .bubble{margin-top:20px;background:#1fb35b;color:#fff;font-size:42px;font-weight:800;line-height:1.25;
+    padding:26px 32px;border-radius:30px 30px 30px 8px}
+  .days{display:flex;gap:14px;margin-top:22px}
+  .days div{flex:1;height:96px;border-radius:20px;background:#eee;display:flex;align-items:center;justify-content:center;
+    font-size:36px;font-weight:900;color:#999}
+  #cert{left:100px;width:880px;top:1190px;padding:0;border-radius:40px;background:linear-gradient(135deg,#fff6cf,#ffd54a 45%,#f2a900);
+    box-shadow:0 30px 80px rgba(0,0,0,.55);overflow:hidden}
+  #cert .in{margin:18px;border:6px dashed rgba(90,55,0,.55);border-radius:28px;padding:22px 30px;text-align:center;color:#3b2500}
+  #amt{font-size:190px;font-weight:900;line-height:1;letter-spacing:-6px}
+  #certT{font-size:48px;font-weight:900;letter-spacing:8px}
+  #certF{font-size:40px;font-weight:700;margin-top:10px}
+  #shine{position:absolute;top:-50%;width:160px;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);
+    transform:rotate(20deg)}
+  .chk{display:flex;align-items:center;gap:20px;font-size:42px;font-weight:800;margin-top:20px;opacity:0}
+  .chk b{width:64px;height:64px;border-radius:50%;background:#1fb35b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px}
+  .sw{margin-left:auto;width:150px;height:78px;border-radius:999px;background:#ccc;position:relative}
+  .sw i{position:absolute;top:7px;left:7px;width:64px;height:64px;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+  .chip{font-size:64px;font-weight:900;color:#fff;padding:22px 44px;border-radius:26px;left:50%;white-space:nowrap;
+    box-shadow:0 18px 44px rgba(0,0,0,.45)}
+  .docs{display:flex;justify-content:space-between;margin-top:26px}
+  .doc{width:130px;height:150px;border-radius:22px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:70px;position:relative}
+  .doc span{position:absolute;transition:none}
+  .conf{position:absolute;width:18px;height:28px;border-radius:4px;opacity:0}
+</style></head><body>
+<div id="bar" class="abs"></div>
+<div id="hook" class="abs pill">✈️ TRAVEL AGENTS</div>
+
+<div id="quote" class="abs card">
+  <div class="row">📩 Trip Quote <span id="sent" class="badge" style="opacity:0">SENT ✓</span></div>
+  <div style="font-size:54px;font-weight:900;margin-top:18px">Cancún Getaway 🌴</div>
+  <div class="muted" style="font-size:34px;margin-top:6px">7 nights · All-inclusive · 2 travelers</div>
+  <div id="seen" class="muted" style="font-size:32px;margin-top:22px;opacity:0">Seen · waiting <span class="dots"><i></i><i></i><i></i></span></div>
+  <div id="noreply" class="stamp" style="color:#e0262b;border-color:#e0262b">NO REPLY</div>
+</div>
+
+<div id="follow" class="abs card">
+  <div class="row">💬 Follow-up <span class="muted" style="margin-left:auto;font-size:30px">just now</span></div>
+  <div class="bubble">Book this week and get a <u>$100 dining certificate</u> 🍽️</div>
+  <div id="booked" class="stamp" style="color:#1fb35b;border-color:#1fb35b">BOOKED ✓</div>
+</div>
+<div id="confetti"></div>
+
+<div id="week" class="abs card">
+  <div class="row">📅 Book <span style="color:#ff7a00">this week</span></div>
+  <div class="days" id="days"><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div></div>
+</div>
+
+<div id="cert" class="abs card"><div id="shine"></div><div class="in">
+  <div id="amt">$0</div>
+  <div id="certT">DINING CERTIFICATE</div>
+  <div id="certF" style="opacity:0">🍽️ For your first night out</div>
+</div></div>
+
+<div id="check" class="abs card">
+  <div class="row" style="font-size:46px;font-weight:900">🛎️ We handle it</div>
+  <div class="chk" id="c1"><b>✓</b>Every booking tracked</div>
+  <div class="chk" id="c2"><b>✓</b>Certificate delivered</div>
+  <div class="chk" id="c3"><b>✓</b>Client notified</div>
+  <div class="chk" id="c4" style="margin-top:30px">⚡ Autopilot <div class="sw" id="sw"><i></i></div></div>
+</div>
+
+<div id="k1" class="abs chip" style="top:1230px;background:#7b3fe4">✨ CREATIVE</div>
+<div id="k2" class="abs chip" style="top:1380px;background:#ff7a00">📣 MARKETING</div>
+<div id="k3" class="abs chip" style="top:1530px;background:#1fb35b">🎁 INCENTIVES</div>
+
+<div id="funnel" class="abs card">
+  <div class="row" style="font-size:48px;font-weight:900;justify-content:center">QUOTES <span style="color:#ff7a00">➜</span> BOOKINGS</div>
+  <div class="docs"><div class="doc"><span>📄</span><span>✅</span></div><div class="doc"><span>📄</span><span>✅</span></div>
+    <div class="doc"><span>📄</span><span>✅</span></div><div class="doc"><span>📄</span><span>✅</span></div><div class="doc"><span>📄</span><span>✅</span></div></div>
+</div>
+
+<script>
+const DUR = 22.22;
+const $ = id => document.getElementById(id);
+const cl = (x,a=0,b=1) => Math.min(b, Math.max(a, x));
+const P = (t,s,d) => cl((t - s) / d);
+const outCubic = x => 1 - Math.pow(1 - x, 3);
+const outBack = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+
+// enter/exit window: returns [visibility 0..1, eased-in, eased-out]
+function win(t, tin, tout, din = .35, dout = .25) {
+  const a = P(t, tin, din), b = 1 - P(t, tout - dout, dout);
+  return [Math.min(a, b), outBack(a), outCubic(1 - b)];
+}
+function card(el, t, tin, tout, mode = "up") {
+  const [v, a, b] = win(t, tin, tout);
+  el.style.opacity = v;
+  let tf = "";
+  if (mode === "up") tf = `translateY(${(1 - a) * 260 + b * 120}px) scale(${0.9 + 0.1 * a - 0.1 * b})`;
+  if (mode === "pop") tf = `scale(${0.4 + 0.6 * a - 0.2 * b}) rotate(${(1 - a) * -6}deg)`;
+  el.style.transform = tf;
+}
+function stamp(el, t, at, rot) {
+  const x = P(t, at, .22);
+  el.style.opacity = x > 0 ? 1 : 0;
+  el.style.transform = `translate(-50%,-50%) rotate(${rot}deg) scale(${2.4 - 1.4 * outCubic(x)})`;
+}
+// deterministic confetti
+const cf = $("confetti"), CONF = [];
+for (let i = 0; i < 40; i++) {
+  const d = document.createElement("div"); d.className = "conf";
+  d.style.background = ["#ffd400", "#1fb35b", "#ff7a00", "#7b3fe4", "#2f8cff"][i % 5];
+  const ang = (i * 137.5) * Math.PI / 180, sp = 500 + (i * 53 % 400);
+  CONF.push({ d, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 500, r: i * 47 % 360 });
+  cf.appendChild(d);
+}
+
+window.render = function (t) {
+  $("bar").style.transform = `scaleX(${t / DUR})`;
+
+  // hook pill
+  { const [v, a, b] = win(t, 0.05, 3.75); const e = $("hook");
+    e.style.opacity = v; e.style.transform = `translateX(-50%) translateY(${(1 - a) * -160 - b * 80}px) scale(${1 + 0.04 * Math.sin(t * 6)})`; }
+
+  // quote card -> SENT -> seen -> NO REPLY
+  card($("quote"), t, 1.0, 3.8);
+  $("sent").style.opacity = P(t, 2.24, .15);
+  $("sent").style.transform = `scale(${0.5 + 0.5 * outBack(P(t, 2.24, .3))})`;
+  $("seen").style.opacity = P(t, 2.7, .2);
+  document.querySelectorAll("#seen i").forEach((d, i) => d.style.transform = `translateY(${t < 3.07 ? Math.sin(t * 12 - i) * -6 : 0}px)`);
+  $("quote").style.filter = `grayscale(${P(t, 2.79, .4)})`;
+  stamp($("noreply"), t, 3.07, -12);
+
+  // follow-up -> BOOKED + confetti
+  card($("follow"), t, 3.82, 6.75);
+  stamp($("booked"), t, 6.12, -8);
+  const ct = t - 6.12;
+  CONF.forEach(c => {
+    if (ct < 0 || ct > 1.1 || t > 6.75) { c.d.style.opacity = 0; return; }
+    c.d.style.opacity = 1 - ct / 1.1;
+    c.d.style.transform = `translate(${540 + c.vx * ct}px, ${1420 + c.vy * ct + 1400 * ct * ct}px) rotate(${c.r + ct * 720}deg)`;
+  });
+
+  // this week calendar
+  card($("week"), t, 6.79, 9.2);
+  [...$("days").children].forEach((d, i) => {
+    const on = P(t, 7.1 + i * 0.16, .15);
+    d.style.background = on ? `rgba(255,122,0,${on})` : "#eee";
+    d.style.color = on > .5 ? "#fff" : "#999";
+    d.style.transform = `scale(${1 + 0.15 * Math.sin(Math.PI * on)})`;
+  });
+
+  // $100 certificate
+  card($("cert"), t, 9.2, 13.4, "pop");
+  $("amt").textContent = "$" + Math.round(100 * outCubic(P(t, 9.35, .55)));
+  const tt = P(t, 9.87, .5); $("certT").style.clipPath = `inset(0 ${100 - tt * 100}% 0 0)`;
+  $("certF").style.opacity = P(t, 11.5, .3);
+  $("shine").style.left = `${-200 + ((t - 9.4) % 1.6) / 1.6 * 1300}px`;
+
+  // we handle it + autopilot
+  card($("check"), t, 13.45, 17.25);
+  [["c1", 13.8], ["c2", 14.25], ["c3", 14.64], ["c4", 15.36]].forEach(([id, at]) => {
+    const x = P(t, at, .3), e = $(id);
+    e.style.opacity = x; e.style.transform = `translateX(${(1 - outCubic(x)) * -80}px)`;
+    const b = e.querySelector("b"); if (b) b.style.transform = `scale(${outBack(x)})`;
+  });
+  const sw = outBack(P(t, 16.42, .3));
+  $("sw").style.background = sw > .5 ? "#1fb35b" : "#ccc";
+  $("sw").querySelector("i").style.transform = `translateX(${sw * 72}px)`;
+
+  // chips
+  [["k1", 17.29, -1], ["k2", 17.59, 1], ["k3", 18.07, -1]].forEach(([id, at, side]) => {
+    const [v, a, b] = win(t, at, 18.75, .3, .2), e = $(id);
+    e.style.opacity = v;
+    e.style.transform = `translateX(calc(-50% + ${(1 - a) * side * 700}px)) rotate(${side * -3}deg) scale(${1 - 0.2 * b})`;
+  });
+
+  // quotes -> bookings
+  card($("funnel"), t, 18.78, 99);
+  document.querySelectorAll(".doc").forEach((d, i) => {
+    const x = P(t, 19.7 + i * 0.32, .25), [q, k] = d.children;
+    q.style.opacity = 1 - x; q.style.transform = `scale(${1 - x})`;
+    k.style.opacity = x; k.style.transform = `scale(${outBack(x)})`;
+    d.style.background = x > .5 ? "#d9f5e4" : "#eee";
+  });
+};
+render(0);
+</script></body></html>

@@ -53,3 +53,30 @@ Knobs: `--gap` (pause length to cut, default 0.4s), `--zoom` (punch-in, 1.12), `
 Make a contact sheet of the render and Read it: caption placement, no stacked lines,
 face not cropped on zoomed segments. Then send the mp4 with SendUserFile. Number versions
 (`cut-v1`, `cut-v2`) and keep the source untouched. Publishing goes through the `blotato` skill.
+
+## 6. Motion graphics and sound effects (optional)
+
+Animated cards, stamps, counters, checklists and chips are built as an HTML page with a
+deterministic `window.render(t)` (no CSS animations or timers), then rendered to a
+transparent PNG sequence and composited over the cut.
+
+1. Get each word's time in the *edited* timeline (remap `words.json` through the cut list,
+   which `autocut.py` prints and recomputes the same way). Time every graphic to a spoken word.
+2. Copy `examples/travel-ad-graphics.html` as a starting point. Layout on 1080×1920:
+   - top pill at y≈120
+   - face at 15–50%
+   - captions at `--caption-y 0.575`
+   - cards in the 1190–1650 zone
+   - keep x within 120–960, clear of the TikTok/Reels right rail and bottom UI
+   Don't invent stats, prices or claims. Illustrative mock content is fine only if the speech supports it.
+3. Preview stills first (cheap):
+   `node scripts/render_overlay.js graphics.html stills --stills 3.4,6.4,11.8`,
+   overlay them on frames of the base cut, and Read the strip.
+4. Full render: `node scripts/render_overlay.js graphics.html gfx_frames <duration>` (about a minute for 20s).
+5. SFX: adapt `scripts/sfx_example.py` (synthesized whoosh, pop, ding and thud at given times) → `sfx.wav`.
+6. Composite:
+   ```bash
+   ffmpeg -i base.mp4 -framerate 30 -i gfx_frames/%05d.png -i sfx.wav -filter_complex \
+     "[0:v][1:v]overlay=0:0:eof_action=pass:format=auto,format=yuv420p[v];[2:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=0.8[s];[0:a][s]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[a]" \
+     -map "[v]" -map "[a]" -c:v libx264 -crf 19 -c:a aac -b:a 192k -movflags +faststart out.mp4
+   ```
