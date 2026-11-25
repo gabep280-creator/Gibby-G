@@ -50,6 +50,10 @@ next-env.d.ts
 /.claude/skills/*
 !/.claude/skills/blotato/
 !/.claude/skills/content/
+!/.claude/skills/video-edit/
 /.agents/skills
 /.windsurf/skills
 /skills-lock.json
+
+# raw video footage and renders (too big for git)
+/content/footage
