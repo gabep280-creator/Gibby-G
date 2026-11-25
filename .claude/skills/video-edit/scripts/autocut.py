@@ -31,6 +31,7 @@ p.add_argument("--highlight", default="00D7FF", help="ASS BGR hex for the active
 p.add_argument("--crf", type=int, default=19)
 p.add_argument("--vad", action="store_true",
                help="decide cuts from audio loudness instead of transcript timings (safer: Whisper timings can drift and clip words)")
+p.add_argument("--times-out", help="write [{w, s, e}] word times in the EDITED timeline here (for timing graphics)")
 p.add_argument("--vad-db", type=float, default=-48, help="speech threshold in dBFS for --vad")
 a = p.parse_args()
 
@@ -94,6 +95,11 @@ def remap(t):
         elif t >= s: return out + t - s
         else: return out
     return out
+
+if a.times_out:
+    json.dump({"keep": keep, "total": sum(e - s for s, e in keep),
+               "words": [{"w": w["w"], "s": round(remap(w["s"]), 3), "e": round(remap(w["e"]), 3)} for w in words]},
+              open(a.times_out, "w"), indent=1)
 
 # 2. captions (ASS) ---------------------------------------------------------
 def ts(t):
