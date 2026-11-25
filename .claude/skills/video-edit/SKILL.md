@@ -48,6 +48,14 @@ Knobs: `--gap` (pause length to cut, default 0.4s), `--zoom` (punch-in, 1.12), `
 `--caption-y` (0.66 of height), `--words-per-line` (3), `--highlight` (ASS BGR hex,
 `00D7FF` = yellow), `--no-captions`. Output is 1080×1920 H.264/AAC at 30 fps, -14 LUFS, faststart.
 
+**Prefer `--vad`.** Whisper word timings drift by up to about 0.5s, especially after long pauses
+and near the end, so cutting on them can clip the start or end of real words. `--vad` cuts on
+audio loudness instead (pauses longer than `--gap`, measured on raw silence) and snaps caption
+words onto kept audio. Use `--pad-in 0.08 --pad-out 0.15`. A repeated last word in the transcript
+(for example "years. Years.") is usually one word with bad timing, not a real repeat: check the
+loudness envelope before cutting it. When the cut changes after graphics are built, retime them
+with a piecewise time map (new→old word anchors) instead of editing every number.
+
 ## 5. Check and deliver
 
 Make a contact sheet of the render and Read it: caption placement, no stacked lines,

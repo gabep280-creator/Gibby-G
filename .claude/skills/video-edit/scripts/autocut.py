@@ -29,6 +29,9 @@ p.add_argument("--font", default="Inter Black")
 p.add_argument("--font-size", type=int, default=96)
 p.add_argument("--highlight", default="00D7FF", help="ASS BGR hex for the active word (00D7FF = yellow)")
 p.add_argument("--crf", type=int, default=19)
+p.add_argument("--vad", action="store_true",
+               help="decide cuts from audio loudness instead of transcript timings (safer: Whisper timings can drift and clip words)")
+p.add_argument("--vad-db", type=float, default=-48, help="speech threshold in dBFS for --vad")
 a = p.parse_args()
 
 words = json.load(open(a.words))
@@ -49,6 +52,39 @@ for g in groups:
         keep[-1][1] = e
     else:
         keep.append([s, e])
+
+if a.vad:
+    import numpy as np
+    pcm = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", a.src, "-f", "s16le", "-ac", "1", "-ar", "16000", "-"],
+                                       capture_output=True, check=True).stdout, np.int16).astype(float) / 32768
+    rms = np.sqrt(np.convolve(pcm ** 2, np.ones(400) / 400, "same"))[::160]   # 25 ms window, 10 ms hop
+    sp = 20 * np.log10(rms + 1e-9) > a.vad_db
+    regs, i = [], 0
+    while i < len(sp):
+        if sp[i]:
+            j = i
+            while j < len(sp) and sp[j]: j += 1
+            if j - i >= 4: regs.append([i / 100, j / 100])
+            i = j
+        else: i += 1
+    merged = []
+    for s_, e_ in regs:                      # merge on the raw silence length
+        if merged and s_ - merged[-1][1] <= a.gap: merged[-1][1] = e_
+        else: merged.append([s_, e_])
+    keep = []
+    for s_, e_ in merged:
+        s_, e_ = max(0.0, s_ - a.pad_in), min(dur, e_ + a.pad_out)
+        if keep and s_ <= keep[-1][1]: keep[-1][1] = e_
+        else: keep.append([s_, e_])
+    # snap caption words that start or end inside a removed gap onto kept audio
+    for w in words:
+        if not any(s_ <= w["s"] < e_ for s_, e_ in keep):
+            nxt = [s_ for s_, e_ in keep if s_ > w["s"]]
+            if nxt: w["s"] = nxt[0]
+        if not any(s_ < w["e"] <= e_ for s_, e_ in keep):
+            prv = [e_ for s_, e_ in keep if e_ < w["e"]]
+            if prv and prv[-1] > w["s"]: w["e"] = prv[-1]
+        w["e"] = max(w["e"], w["s"] + 0.05)
 
 def remap(t):
     """source time -> output time"""
