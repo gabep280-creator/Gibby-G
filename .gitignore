@@ -47,7 +47,9 @@ next-env.d.ts
 *.db-journal
 
 # prisma agent skill docs (auto-installed by `prisma init`, not app code)
-/.claude/skills
+/.claude/skills/*
+!/.claude/skills/blotato/
+!/.claude/skills/content/
 /.agents/skills
 /.windsurf/skills
 /skills-lock.json
