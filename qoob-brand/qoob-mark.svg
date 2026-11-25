@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-335 -335 670 670" width="1024" height="1024">
+  <defs>
+    <linearGradient id="gP" gradientUnits="userSpaceOnUse" x1="131" y1="-268" x2="131" y2="6"><stop offset="0" stop-color="#D17BFA"/><stop offset="1" stop-color="#A24DF0"/></linearGradient>
+    <linearGradient id="gC" gradientUnits="userSpaceOnUse" x1="-131" y1="-6" x2="-131" y2="268"><stop offset="0" stop-color="#7EDCF2"/><stop offset="1" stop-color="#3FB3DE"/></linearGradient>
+    <linearGradient id="gB" gradientUnits="userSpaceOnUse" x1="-268" y1="-131" x2="54" y2="-131"><stop offset="0" stop-color="#3A3FE6"/><stop offset="1" stop-color="#2F62F0"/></linearGradient>
+    <linearGradient id="gT" gradientUnits="userSpaceOnUse" x1="-54" y1="131" x2="268" y2="131"><stop offset="0" stop-color="#3567C8"/><stop offset="1" stop-color="#2AA08F"/></linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0B1240" flood-opacity="0.28"/></filter>
+  </defs>
+  <g transform="rotate(-45)">
+    <path d="M-6,-131 L-6,6 L131,6 A137,137 0 1 0 -6,-131 Z M215,-131 A84,84 0 1 0 47,-131 A84,84 0 1 0 215,-131 Z" fill="url(#gP)" fill-rule="evenodd"/>
+    <path d="M6,131 L6,-6 L-131,-6 A137,137 0 1 0 6,131 Z M-47,131 A84,84 0 1 0 -215,131 A84,84 0 1 0 -47,131 Z" fill="url(#gC)" fill-rule="evenodd"/>
+    <g filter="url(#sh)">
+      <path d="M6,-131 A137,137 0 1 0 -268,-131 A137,137 0 1 0 6,-131 Z M-47,-131 A84,84 0 1 0 -215,-131 A84,84 0 1 0 -47,-131 Z M-27.0,-250 h54 v250 h-54 Z" fill="url(#gB)" fill-rule="evenodd"/>
+      <path d="M268,131 A137,137 0 1 0 -6,131 A137,137 0 1 0 268,131 Z M215,131 A84,84 0 1 0 47,131 A84,84 0 1 0 215,131 Z M-27.0,0 h54 v250 h-54 Z" fill="url(#gT)" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>
