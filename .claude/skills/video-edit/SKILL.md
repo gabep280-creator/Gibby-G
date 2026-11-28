@@ -56,6 +56,12 @@ words onto kept audio. Use `--pad-in 0.08 --pad-out 0.15`. A repeated last word 
 loudness envelope before cutting it. When the cut changes after graphics are built, retime them
 with a piecewise time map (new→old word anchors) instead of editing every number.
 
+**Brand name rule (always):** pass `--protect START,END` covering the spoken brand name
+("Creative Marketing Incentives") and any stat line right after it, using audio-verified times.
+Nothing is cut inside or just before it, so the natural pause and the zoom stay put. Put NO sound
+effects from 0.5s before the brand name until it ends (no whoosh on the logo entrance, no counter
+ticks over it). The client hears anything over or around the brand name as being cut off.
+
 ## 5. Check and deliver
 
 Make a contact sheet of the render and Read it: caption placement, no stacked lines,

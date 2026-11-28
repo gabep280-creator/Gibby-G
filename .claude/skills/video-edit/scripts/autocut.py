@@ -32,6 +32,8 @@ p.add_argument("--crf", type=int, default=19)
 p.add_argument("--vad", action="store_true",
                help="decide cuts from audio loudness instead of transcript timings (safer: Whisper timings can drift and clip words)")
 p.add_argument("--times-out", help="write [{w, s, e}] word times in the EDITED timeline here (for timing graphics)")
+p.add_argument("--protect", action="append", default=[],
+               help="START,END (source seconds) never cut inside or right before this span, e.g. the brand name; repeatable")
 p.add_argument("--vad-db", type=float, default=-48, help="speech threshold in dBFS for --vad")
 a = p.parse_args()
 
@@ -70,7 +72,9 @@ if a.vad:
         else: i += 1
     merged = []
     for s_, e_ in regs:                      # merge on the raw silence length
-        if merged and s_ - merged[-1][1] <= a.gap: merged[-1][1] = e_
+        prot = any(merged and merged[-1][1] < pe + 0.3 and s_ > ps - 0.8
+                   for ps, pe in [tuple(map(float, p.split(","))) for p in a.protect])
+        if merged and (s_ - merged[-1][1] <= a.gap or prot): merged[-1][1] = e_
         else: merged.append([s_, e_])
     keep = []
     for s_, e_ in merged:
